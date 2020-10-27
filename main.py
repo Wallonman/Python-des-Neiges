@@ -1,5 +1,16 @@
 import turtle
 
+matrice = []
+
+def lire_matrice(fichier):
+    f = open(fichier, "r")
+    for x in f:
+        matrice.append(list(int(a) for a in x.split()))
+    print(matrice)
+
+
+lire_matrice("C:\Src\Python\Project1\matrice.txt")
+
 pos = (0, 0)
 dot = turtle.Turtle(shape="circle", visible=True)
 dot.shapesize(0.5, 0.5)
@@ -35,9 +46,6 @@ def move_down():
 
 screen = turtle.Screen()
 t = turtle.Turtle()
-
-
-#t.dot(10, "blue")
 
 screen.onkeypress(move_right, "Right")
 screen.onkeypress(move_up, "Up")
