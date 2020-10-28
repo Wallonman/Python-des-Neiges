@@ -26,6 +26,19 @@ def calculer_pas(matrice):
 pas = calculer_pas(matrice)
 print("pas = " + str(pas))
 
+
+def coordonnees(case, pas):
+    x = case[1] * pas + ZONE_PLAN_MINI[0]
+    y = ZONE_PLAN_MAXI[1] - (case[0] * pas) - pas
+    coord = (x, y)
+    return coord
+
+coord = coordonnees((0, 5), pas)
+print("ZONE_PLAN_MAXI = " + str(ZONE_PLAN_MAXI))
+print("ZONE_PLAN_MINI = " + str(ZONE_PLAN_MINI))
+
+print("coord = " + str(coord))
+
 pos = (0, 0)
 dot = turtle.Turtle(shape="circle", visible=True)
 dot.shapesize(0.5, 0.5)
@@ -65,7 +78,6 @@ def move_down():
 
 
 screen = turtle.Screen()
-print(ZONE_PLAN_MAXI)
 turtle.title("Python des neiges")
 t = turtle.Turtle()
 t.penup()
