@@ -1,6 +1,13 @@
 import turtle
 from CONFIGS import *
 
+screen = turtle.Screen()
+turtle.title("Python des neiges")
+t = turtle.Turtle()
+t.hideturtle()
+t.speed(10)
+t.penup()
+
 
 def lire_matrice(fichier):
     m = []
@@ -33,14 +40,65 @@ def coordonnees(case, pas):
     coord = (x, y)
     return coord
 
-coord = coordonnees((0, 5), pas)
 print("ZONE_PLAN_MAXI = " + str(ZONE_PLAN_MAXI))
 print("ZONE_PLAN_MINI = " + str(ZONE_PLAN_MINI))
 
-print("coord = " + str(coord))
+# coord = coordonnees((0, 5), pas)
+# print("coord = " + str(coord))
+
+
+def tracer_carre(dimension):
+    t.begin_fill()
+    t.fd(dimension)
+    t.setheading(90)
+    t.fd(dimension)
+    t.setheading(180)
+    t.fd(dimension)
+    t.setheading(270)
+    t.fd(dimension)
+    t.setheading(0) # set back heading
+    t.end_fill()
+
+
+# def tracer_carre(dimension):
+#     t.shape("square")
+#     print("pensize set to " + str(dimension))
+#     t.pensize(100)
+#     # d.color("red")
+#     t.stamp()
+
+# tracer_carre(pas)
+
+
+def tracer_case(case, couleur, p):
+    t.color(couleur)
+    coord = coordonnees(case, p)
+    print(coord)
+    t.goto(coord)
+    tracer_carre(p)
+
+
+# tracer_case((0, 0), COULEUR_MUR, pas)
+# tracer_case((0, 1), COULEUR_MUR, pas)
+# tracer_case((0, 2), COULEUR_MUR, pas)
+
+
+def afficher_plan(matrice):
+    for l in range(len(matrice)):
+        # print(l)
+        for c in range(len(matrice[l])):
+            # print(c)
+            # print(matrice[l][c])
+            if matrice[l][c] > 0 :
+                # print(coordonnees((l, c), pas))
+                tracer_case((l, c), COULEURS[matrice[l][c]], pas)
+
+
+
+afficher_plan(matrice)
 
 pos = (0, 0)
-dot = turtle.Turtle(shape="circle", visible=True)
+dot = turtle.Turtle(shape="square", visible=True)
 dot.shapesize(0.5, 0.5)
 dot.color("red")
 dot.penup()
@@ -76,11 +134,6 @@ def move_left():
 def move_down():
     move("Down", move_down)
 
-
-screen = turtle.Screen()
-turtle.title("Python des neiges")
-t = turtle.Turtle()
-t.penup()
 
 screen.onkeypress(move_right, "Right")
 screen.onkeypress(move_up, "Up")
