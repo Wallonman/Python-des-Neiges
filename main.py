@@ -4,6 +4,8 @@ from plan import *
 
 screen = turtle.Screen()
 turtle.title("Python des neiges")
+turtle.hideturtle()
+turtle.speed(0)
 t = turtle.Turtle()
 t.hideturtle()
 t.speed(0)
@@ -11,17 +13,15 @@ t.penup()
 
 
 matrice = lire_matrice(fichier_plan)
-print("Matrice = " + str(matrice))
-
+# print("Matrice = " + str(matrice))
 
 pas = calculer_pas(matrice)
-print("pas = " + str(pas))
-
+# print("pas = " + str(pas))
 
 # matrice_coord = matrice_coordonnees(matrice, pas)
 # print("Matrice des coordonnées = " + str(matrice_coord))
-print("ZONE_PLAN_MAXI = " + str(ZONE_PLAN_MAXI))
-print("ZONE_PLAN_MINI = " + str(ZONE_PLAN_MINI))
+# print("ZONE_PLAN_MAXI = " + str(ZONE_PLAN_MAXI))
+# print("ZONE_PLAN_MINI = " + str(ZONE_PLAN_MINI))
 
 # coord = coordonnees((0, 5), pas)
 # print("coord = " + str(coord))
@@ -32,11 +32,17 @@ print("ZONE_PLAN_MINI = " + str(ZONE_PLAN_MINI))
 
 afficher_plan(t, matrice, pas)
 
-pos = (0, 0)
-dot = turtle.Turtle(shape="square", visible=True)
-dot.shapesize(0.5, 0.5)
-dot.color("red")
-dot.penup()
+pos = POSITION_DEPART
+c = coordonnees(pos, pas)
+# print(c)
+t.setpos(c[0] + (pas / 2), c[1] + (pas / 2))
+# print(turtle.pos())
+t.dot(pas, COULEUR_PERSONNAGE)
+# dot = turtle.Turtle(shape="square", visible=True)
+# turtle.dot(pas, COULEUR_PERSONNAGE)
+# dot.shapesize(0.5, 0.5)
+# dot.color("red")
+# dot.penup()
 
 
 def move(dir, delegate):
@@ -48,9 +54,11 @@ def move(dir, delegate):
     }
     turtle.onkeypress(None, dir)  # Désactive la touche Left
     # print(directions[dir])
+    t.dot(pas, COULEUR_CASES)
     t.setheading(directions[dir])
-    t.fd(10)
-    dot.setpos(t.pos())
+    t.fd(pas)
+    # dot.setpos(t.pos())
+    t.dot(pas, COULEUR_PERSONNAGE)
     turtle.onkeypress(delegate, dir)  # Réassocie la touche Left à la fonction
 
 
