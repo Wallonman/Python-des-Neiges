@@ -5,7 +5,7 @@ screen = turtle.Screen()
 turtle.title("Python des neiges")
 t = turtle.Turtle()
 t.hideturtle()
-t.speed(10)
+t.speed(0)
 t.penup()
 
 
@@ -40,6 +40,20 @@ def coordonnees(case, pas):
     coord = (x, y)
     return coord
 
+
+def matrice_coordonnees(matrice, pas):
+    m = []
+    for l in range(len(matrice)):
+        i = []
+        for c in range(len(matrice[0])):
+            i.append(coordonnees((l, c), pas))
+        m.append(i)
+    return m
+
+
+matrice_coord = matrice_coordonnees(matrice, pas)
+
+print("Matrice des coordonnées = " + str(matrice_coord))
 print("ZONE_PLAN_MAXI = " + str(ZONE_PLAN_MAXI))
 print("ZONE_PLAN_MINI = " + str(ZONE_PLAN_MINI))
 
@@ -49,31 +63,16 @@ print("ZONE_PLAN_MINI = " + str(ZONE_PLAN_MINI))
 
 def tracer_carre(dimension):
     t.begin_fill()
-    t.fd(dimension)
-    t.setheading(90)
-    t.fd(dimension)
-    t.setheading(180)
-    t.fd(dimension)
-    t.setheading(270)
-    t.fd(dimension)
-    t.setheading(0) # set back heading
+    for _ in range(4):
+        t.forward(dimension)
+        t.left(90)
     t.end_fill()
-
-
-# def tracer_carre(dimension):
-#     t.shape("square")
-#     print("pensize set to " + str(dimension))
-#     t.pensize(100)
-#     # d.color("red")
-#     t.stamp()
-
-# tracer_carre(pas)
 
 
 def tracer_case(case, couleur, p):
     t.color(couleur)
-    coord = coordonnees(case, p)
-    print(coord)
+    coord = coordonnees(case, pas) # matrice_coord[case[0]][case[1]]
+    # print(coord)
     t.goto(coord)
     tracer_carre(p)
 
