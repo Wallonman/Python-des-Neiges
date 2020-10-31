@@ -44,38 +44,62 @@ t.dot(pas, COULEUR_PERSONNAGE)
 # dot.color("red")
 # dot.penup()
 
+directions = {
+    "Right": 0,
+    "Up": 90,
+    "Left": 180,
+    "Down": 270
+}
 
-def move(dir, delegate):
-    directions = {
-        "Right": 0,
-        "Up": 90,
-        "Left": 180,
-        "Down": 270
-    }
-    turtle.onkeypress(None, dir)  # Désactive la touche Left
-    # print(directions[dir])
-    t.dot(pas, COULEUR_CASES)
-    t.setheading(directions[dir])
-    t.fd(pas)
-    # dot.setpos(t.pos())
-    t.dot(pas, COULEUR_PERSONNAGE)
-    turtle.onkeypress(delegate, dir)  # Réassocie la touche Left à la fonction
+
+def can_move(matrice, position, dir):
+    if dir == "Right":
+        newpos = (position[0], position[1] + 1)
+    if dir == "Up":
+        newpos = (position[0] - 1, position[1])
+    if dir == "Left":
+        newpos = (position[0], position[1] - 1)
+    if dir == "Down":
+        newpos = (position[0] + 1, position[1])
+    return newpos, matrice[newpos[0]][newpos[1]]
+
+
+def move(matrice, position, dir, delegate):
+    newpos, item = can_move(matrice, position, dir)
+    # print("new pos = " + str(newpos))
+    # print("item = " + str(item))
+    if item == 0:
+        turtle.onkeypress(None, dir)  # Désactive la touche Left
+        t.dot(pas, COULEUR_CASES)
+        t.setheading(directions[dir])
+        t.fd(pas)
+        # dot.setpos(t.pos())
+        t.dot(pas, COULEUR_PERSONNAGE)
+        turtle.onkeypress(delegate, dir)  # Réassocie la touche Left à la fonction
+        return newpos
+    else:
+        return pos
 
 
 def move_right():
-    move("Right", move_right)
+    global pos
+    pos = move(matrice, pos, "Right", move_right)
+
 
 
 def move_up():
-    move("Up", move_up)
+    global pos
+    pos = move(matrice, pos, "Up", move_up)
 
 
 def move_left():
-    move("Left", move_left)
+    global pos
+    pos = move(matrice, pos, "Left", move_left)
 
 
 def move_down():
-    move("Down", move_down)
+    global pos
+    pos = move(matrice, pos, "Down", move_down)
 
 
 screen.onkeypress(move_right, "Right")
